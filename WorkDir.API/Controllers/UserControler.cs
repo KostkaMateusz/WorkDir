@@ -16,15 +16,13 @@ public class UserControler : ControllerBase
 {
     private readonly IUserService _userService;
     private readonly IValidator<UserRegisterDto> _registerUserDtoValidator;
-    private readonly IUserContextService _userContextService;
     private readonly IMapper _mapper;
     private readonly IFileService _fileService;
 
-    public UserControler(IUserService userService, IValidator<UserRegisterDto> registerUserDtoValidator, IUserContextService userContextService, IMapper mapper, IFileService fileService)
+    public UserControler(IUserService userService, IValidator<UserRegisterDto> registerUserDtoValidator, IMapper mapper, IFileService fileService)
     {
         _userService = userService;
         _registerUserDtoValidator = registerUserDtoValidator;
-        _userContextService = userContextService;
         _mapper = mapper;
         _fileService = fileService;
     }
@@ -57,7 +55,7 @@ public class UserControler : ControllerBase
         return Ok(newUserDto);
     }
 
-    [HttpGet("/")]
+    [HttpGet()]
     [Authorize]
     public async Task<ActionResult> UserInfo()
     {
@@ -65,7 +63,6 @@ public class UserControler : ControllerBase
         var userInfoDto = _mapper.Map<UserInfoDto>(userInfo);
         return Ok(userInfoDto);
     }
-
 
     [HttpGet("all")]
     [Authorize]
@@ -98,9 +95,4 @@ public class UserControler : ControllerBase
 
         return NoContent();
     }
-
-
-
-
-
 }
