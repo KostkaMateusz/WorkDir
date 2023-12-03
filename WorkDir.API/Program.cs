@@ -38,19 +38,21 @@ builder.Services.AddSwaggerGen();
 //Cors Settings
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("FrontEndClient", policyBuilder =>
-
-        policyBuilder.AllowAnyMethod()
-            .AllowAnyHeader()
-            .WithOrigins(builder.Configuration["AllowedHosts"])
-        );
+    options.AddPolicy("AllowAll", policyBuilder =>
+    {
+        policyBuilder.AllowAnyMethod();
+        policyBuilder.AllowAnyHeader();
+        policyBuilder.AllowAnyOrigin();
+    });
 });
-
 
 var app = builder.Build();
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(options =>
+{
+    options.EnableTryItOutByDefault();
+});
 
 //[2/2] Error Handling MiddleWare
 app.UseMiddleware<ErrorHandlingMiddleware>();
@@ -60,7 +62,7 @@ app.UseAuthentication();
 app.UseHttpsRedirection();
 
 //Cors
-app.UseCors("FrontEndClient");
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 

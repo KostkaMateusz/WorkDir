@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WorkDir.API.Models.DataModels;
 using WorkDir.API.Services.StorageServices;
 
@@ -6,6 +7,7 @@ namespace WorkDir.API.Controllers;
 
 
 [ApiController]
+[Authorize]
 public class FileControler : ControllerBase
 {
     private readonly IFileService _fileService;
