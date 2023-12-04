@@ -1,12 +1,9 @@
-using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
-using System.Text;
+using WorkDir.API;
 using WorkDir.API.Middleware;
 using WorkDir.API.Services;
-using WorkDir.API.Services.Authentication;
 using WorkDir.API.Services.StorageServices;
 using WorkDir.Storage;
-using WorkDir.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,13 +29,12 @@ builder.Services.AddControllers();
 //[1/2] Error Handling MiddleWare
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.ConfigureSwaggerDoc();
 
 //Cors Settings
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name:"AllowAll", policyBuilder =>
+    options.AddPolicy(name: "AllowAll", policyBuilder =>
     {
         policyBuilder.AllowAnyMethod();
         policyBuilder.AllowAnyHeader();

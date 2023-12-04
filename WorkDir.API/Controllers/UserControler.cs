@@ -27,7 +27,6 @@ public class UserControler : ControllerBase
         _fileService = fileService;
     }
 
-
     [HttpPost("login")]
     [AllowAnonymous]
     public async Task<ActionResult> Login([FromBody] UserLoginDto loginUserDto)
@@ -39,7 +38,7 @@ public class UserControler : ControllerBase
 
     [HttpPost("register")]
     [AllowAnonymous]
-    public async Task<ActionResult> RegisterUser([FromBody] UserRegisterDto registerUserDto)
+    public async Task<ActionResult<UserRegisterResponseDto>> RegisterUser([FromBody] UserRegisterDto registerUserDto)
     {
         var validationResult = await _registerUserDtoValidator.ValidateAsync(registerUserDto);
 
@@ -57,7 +56,7 @@ public class UserControler : ControllerBase
 
     [HttpGet()]
     [Authorize]
-    public async Task<ActionResult> UserInfo()
+    public async Task<ActionResult<UserInfoDto>> UserInfo()
     {
         var userInfo = await _userService.ReadUserInfo();
         var userInfoDto = _mapper.Map<UserInfoDto>(userInfo);
@@ -66,7 +65,7 @@ public class UserControler : ControllerBase
 
     [HttpGet("all")]
     [Authorize]
-    public async Task<ActionResult> AllUsers()
+    public async Task<ActionResult<List<UserListInfoDto>>> AllUsers()
     {
         var userInfoList = await _userService.GetAllUsers();
         var userListInfoDto = _mapper.Map<List<UserListInfoDto>>(userInfoList);
@@ -75,7 +74,7 @@ public class UserControler : ControllerBase
 
     [Authorize]
     [HttpPut()]
-    public async Task<ActionResult> UpdateUser([FromBody] UserRegisterDto registerUserDto)
+    public async Task<ActionResult<UserRegisterDto>> UpdateUser([FromBody] UserRegisterDto registerUserDto)
     {
         var validationResult = await _registerUserDtoValidator.ValidateAsync(registerUserDto);
 
@@ -87,6 +86,12 @@ public class UserControler : ControllerBase
         return Ok(registerUserDto);
     }
 
+    /// <summary>
+    /// Delete Current User
+    /// </summary>
+    /// <returns>ActionResult</returns>
+    /// <response code="204">When User is Deleted</response>
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [Authorize]
     [HttpDelete()]
     public async Task<ActionResult> DeleteUser()
