@@ -23,7 +23,7 @@ The core functionality is complete **CRUD** for folders and files. Users can cre
 - CRUD methods for files and folders
 - File Upload Stream
 - File download
-
-### Objects Relation Model(ORM):
+---
+### Objects Relation Model:
 
 ![Objects Relation Model](/DBschema.png "Objects Relation Model")
