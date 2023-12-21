@@ -9,7 +9,7 @@ The core functionality is complete **CRUD** for folders and files. Users can cre
 ### The RESTfull API is hosted [here](https://workdir.azurewebsites.net/swagger)
 ### Front End is hosted [here](https://dreamteam.azurewebsites.net/)
 ---
-### Techonolgies/Tools:
+### Technologies/Tools:
 - .NET8
 - ASP.NET
 - Entity Framework Core
